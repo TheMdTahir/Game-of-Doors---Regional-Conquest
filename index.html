@@ -1,243 +1,337 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Game of Doors – Regional Conquest</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 Game of Doors – Regional Conquest</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-    }
+<style>
 
-    .overlay {
-      background: rgba(0,0,0,0.82);
-      min-height: 100vh;
-      padding: 20px 15px 40px;
-    }
+:root{
+  --gold:#facc15;
+  --orange:#fb923c;
+  --purple:#8b5cf6;
+  --card:#1e293b;
+  --soft:#cbd5e1;
+}
 
-    h1 {
-      text-align: center;
-      margin: 10px 0 5px;
-      font-size: 28px;
-      letter-spacing: 1px;
-    }
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#1e1b4b,#0f172a,#111827);
+  color:#fff;
+  overflow-x:hidden;
+}
 
-    .subtitle {
-      text-align: center;
-      color: #ddd;
-      margin-bottom: 30px;
-      font-size: 14px;
-    }
+/* Floating Sparkles */
+body::before{
+  content:"";
+  position:fixed;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle,#ffffff22 1px,transparent 1px);
+  background-size:50px 50px;
+  animation:sparkle 90s linear infinite;
+  z-index:-1;
+}
 
-    .toggle-btn {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      padding: 6px 14px;
-      border: none;
-      cursor: pointer;
-      background: gold;
-      border-radius: 20px;
-      font-weight: bold;
-      z-index: 1000;
-    }
+@keyframes sparkle{
+  from{transform:translate(0,0);}
+  to{transform:translate(-300px,-300px);}
+}
 
-    /* 🔥 Fire Border Animation */
-    @keyframes fireGlow {
-      0% { box-shadow: 0 0 5px red, 0 0 10px orange; }
-      50% { box-shadow: 0 0 15px orange, 0 0 25px red; }
-      100% { box-shadow: 0 0 5px red, 0 0 10px orange; }
-    }
+.container{
+  max-width:1200px;
+  margin:35px auto;
+  padding:0 20px;
+}
 
-    /* 👑 Crown Animation */
-    @keyframes crownGlow {
-      0% { text-shadow: 0 0 5px gold; }
-      50% { text-shadow: 0 0 20px yellow; }
-      100% { text-shadow: 0 0 5px gold; }
-    }
+/* HEADER */
 
-    .champion-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      margin-bottom: 35px;
-    }
+h1{
+  text-align:center;
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:30px;
+  background:linear-gradient(90deg,var(--gold),var(--orange),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    .champion-card {
-      background: linear-gradient(135deg, gold, orange);
-      padding: 18px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 320px;
-      text-align: center;
-      color: black;
-      animation: fireGlow 2s infinite alternate;
-    }
+/* TOPPER SECTION */
 
-    .crown {
-      font-size: 30px;
-      animation: crownGlow 1.5s infinite alternate;
-    }
+.topper-section{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:18px;
+  margin-bottom:30px;
+}
 
-    .champion-card h3 {
-      margin: 8px 0;
-      font-size: 20px;
-    }
+.topper-card{
+  background:linear-gradient(135deg,#1e293b,#0f172a);
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 0 25px rgba(250,204,21,0.25);
+  transition:0.3s;
+}
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
+.topper-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 35px rgba(251,146,60,0.4);
+}
 
-    .card {
-      background: rgba(0,0,0,0.88);
-      padding: 18px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 500px;
-      animation: fireGlow 3s infinite alternate;
-    }
+.topper-title{
+  font-size:12px;
+  letter-spacing:1px;
+  color:var(--soft);
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
 
-    h2 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
+.topper-name{
+  font-size:16px;
+  font-weight:600;
+  color:var(--gold);
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+/* TABS */
 
-    th, td {
-      padding: 8px;
-      border-bottom: 1px solid #444;
-      font-size: 14px;
-    }
+.tabs{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+}
 
-    th {
-      text-align: left;
-      background: #111;
-    }
+.tab-btn{
+  padding:8px 18px;
+  font-size:13px;
+  border-radius:40px;
+  border:none;
+  background:#1e293b;
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    /* Top 5 Different Colors */
-    .rank1 td { color: gold; font-weight: bold; }
-    .rank2 td { color: silver; font-weight: bold; }
-    .rank3 td { color: #cd7f32; font-weight: bold; }
-    .rank4 td { color: #4dd0ff; }
-    .rank5 td { color: #ff7675; }
+.tab-btn.active,
+.tab-btn:hover{
+  background:linear-gradient(90deg,var(--gold),var(--orange));
+  color:#000;
+  font-weight:600;
+}
 
-    /* Dark Mode */
-    .dark-mode {
-      background: #111 !important;
-    }
+/* SECTION */
 
-    /* 📱 Mobile Optimization */
-    @media (max-width: 768px) {
-      h1 { font-size: 22px; }
-      .subtitle { font-size: 12px; }
-      .champion-card, .card { max-width: 100%; }
-      th, td { font-size: 13px; padding: 6px; }
-    }
+.section{
+  display:none;
+  background:#1e293b;
+  padding:25px;
+  border-radius:20px;
+  margin-bottom:35px;
+}
 
-  </style>
+.section.active{
+  display:block;
+}
+
+.section h2{
+  font-size:16px;
+  margin-bottom:15px;
+  color:var(--gold);
+}
+
+/* TABLE */
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  text-align:left;
+  padding:8px 0;
+  font-size:11px;
+  color:var(--soft);
+  text-transform:uppercase;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+td{
+  padding:10px 0;
+  font-size:13px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+/* TOP 5 ENERGY STYLE */
+
+.top5 td:first-child::before{
+  content:"🏅 ";
+}
+
+.top5{
+  background:rgba(250,204,21,0.08);
+}
+
+/* PROGRESS */
+
+.progress{
+  height:4px;
+  background:rgba(255,255,255,0.1);
+  border-radius:4px;
+  margin-top:4px;
+}
+
+.bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--gold),var(--orange));
+}
+
+@media(max-width:768px){
+  h1{font-size:20px;}
+}
+
+</style>
 </head>
 
 <body>
 
-<button class="toggle-btn" onclick="toggleDarkMode()">🌙</button>
-
-<div class="overlay">
-
-<h1>🏆 Game of Doors – Regional Conquest</h1>
-<div class="subtitle">Live Competitive Performance Dashboard</div>
-
-<div class="champion-container">
-  <div class="champion-card" id="salesChampion"></div>
-  <div class="champion-card" id="trainerChampion"></div>
-</div>
-
 <div class="container">
 
-  <div class="card">
-    <h2>🏆 Sales Scoreboard</h2>
-    <table id="salesTable"></table>
-  </div>
+<h1>🏆 Game of Doors – Regional Conquest</h1>
 
-  <div class="card">
-    <h2>🏆 Trainers Scoreboard</h2>
-    <table id="trainerTable"></table>
-  </div>
+<div class="topper-section" id="topperSection"></div>
 
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('sales',this)">Sales</button>
+  <button class="tab-btn" onclick="showTab('trainers',this)">Trainers</button>
+  <button class="tab-btn" onclick="showTab('zone',this)">Zone</button>
+  <button class="tab-btn" onclick="showTab('team',this)">Team</button>
+</div>
+
+<div id="sales" class="section active">
+  <h2>Sales Ranking</h2>
+  <table><thead><tr><th>Rank</th><th>Name</th><th>Score</th></tr></thead>
+  <tbody id="salesTable"></tbody></table>
+</div>
+
+<div id="trainers" class="section">
+  <h2>Trainers Ranking</h2>
+  <table><thead><tr><th>Rank</th><th>Name</th><th>Score</th></tr></thead>
+  <tbody id="trainerTable"></tbody></table>
+</div>
+
+<div id="zone" class="section">
+  <h2>Zone Ranking</h2>
+  <table><thead><tr><th>Rank</th><th>Zone</th><th>Score</th></tr></thead>
+  <tbody id="zoneTable"></tbody></table>
+</div>
+
+<div id="team" class="section">
+  <h2>Team Ranking</h2>
+  <table><thead><tr><th>Rank</th><th>Team</th><th>Score</th></tr></thead>
+  <tbody id="teamTable"></tbody></table>
 </div>
 
 </div>
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzuNcrwlYlvNNRg67uOIX0_7stDVRDksNW21RvflFEkovZj_HMCcnhpkHiRem6CUF4/exec";
+const API_URL="https://script.google.com/macros/s/AKfycbzuNcrwlYlvNNRg67uOIX0_7stDVRDksNW21RvflFEkovZj_HMCcnhpkHiRem6CUF4/exec";
 
-async function fetchData() {
-  const response = await fetch(API_URL);
-  const data = await response.json();
-
-  generateTable(data.sales, "salesTable");
-  generateTable(data.trainers, "trainerTable");
-
-  generateChampion(data.sales, "salesChampion", "Sales Champion");
-  generateChampion(data.trainers, "trainerChampion", "Trainers Champion");
+async function fetchData(){
+  const res=await fetch(API_URL);
+  const data=await res.json();
+  renderAll(data);
 }
 
-function generateChampion(dataObj, elementId, title) {
-  const sorted = Object.entries(dataObj).sort((a,b)=>b[1]-a[1]);
-  const top = sorted[0];
+function renderAll(data){
 
-  document.getElementById(elementId).innerHTML = `
-    <div class="crown">👑</div>
-    <h3>${title}</h3>
-    <div style="font-size:22px; font-weight:bold;">${top[0]}</div>
-    <div>Score: ${top[1]}</div>
+  const sales=data.filter(d=>d.Role==="Sales").sort((a,b)=>b.Score-a.Score);
+  const trainers=data.filter(d=>d.Role==="Trainer").sort((a,b)=>b.Score-a.Score);
+
+  renderTable(sales,"salesTable","Employee",true);
+  renderTable(trainers,"trainerTable","Employee",true);
+  renderZone(sales);
+  renderTeam(sales);
+  renderToppers(sales,trainers);
+}
+
+function renderToppers(sales,trainers){
+
+  const topSalesScore=sales.length?sales[0].Score:0;
+  const topSalesNames=sales.filter(s=>s.Score===topSalesScore).map(s=>s.Employee).join(", ");
+
+  const topTrainerScore=trainers.length?trainers[0].Score:0;
+  const topTrainerNames=trainers.filter(t=>t.Score===topTrainerScore).map(t=>t.Employee).join(", ");
+
+  const teamMap={};
+  sales.forEach(r=>teamMap[r.Team]=(teamMap[r.Team]||0)+r.Score);
+  const sortedTeams=Object.entries(teamMap).sort((a,b)=>b[1]-a[1]);
+  const topTeamScore=sortedTeams.length?sortedTeams[0][1]:0;
+  const topTeamNames=sortedTeams.filter(t=>t[1]===topTeamScore).map(t=>t[0]).join(", ");
+
+  document.getElementById("topperSection").innerHTML=`
+    <div class="topper-card">
+      <div class="topper-title">Top Sales</div>
+      <div class="topper-name">${topSalesNames||"-"}</div>
+    </div>
+    <div class="topper-card">
+      <div class="topper-title">Top Trainers</div>
+      <div class="topper-name">${topTrainerNames||"-"}</div>
+    </div>
+    <div class="topper-card">
+      <div class="topper-title">Top Team</div>
+      <div class="topper-name">${topTeamNames||"-"}</div>
+    </div>
   `;
 }
 
-function generateTable(dataObj, tableId){
-  const table = document.getElementById(tableId);
-  table.innerHTML = `<tr><th>Rank</th><th>Name</th><th>Score</th></tr>`;
-  const sorted = Object.entries(dataObj).sort((a,b)=>b[1]-a[1]);
+function renderTable(data,id,key,highlightTop5=false){
+  const table=document.getElementById(id);
+  table.innerHTML="";
+  const max=data.length>0?data[0].Score:1;
 
-  sorted.forEach((item,index)=>{
-    let rankClass="";
-    if(index==0) rankClass="rank1";
-    else if(index==1) rankClass="rank2";
-    else if(index==2) rankClass="rank3";
-    else if(index==3) rankClass="rank4";
-    else if(index==4) rankClass="rank5";
-
-    table.innerHTML += `
-      <tr class="${rankClass}">
-        <td>${index+1}</td>
-        <td>${item[0]}</td>
-        <td>${item[1]}</td>
-      </tr>
-    `;
+  data.forEach((row,i)=>{
+    table.innerHTML+=`
+      <tr class="${highlightTop5 && i<5 ? 'top5' : ''}">
+        <td>${i+1}</td>
+        <td>${row[key]}</td>
+        <td>${row.Score}
+          <div class="progress">
+            <div class="bar" style="width:${(row.Score/max)*100}%"></div>
+          </div>
+        </td>
+      </tr>`;
   });
 }
 
-function toggleDarkMode(){
-  document.body.classList.toggle("dark-mode");
+function renderZone(sales){
+  const zoneMap={};
+  sales.forEach(r=>zoneMap[r.Zone]=(zoneMap[r.Zone]||0)+r.Score);
+  const zones=Object.keys(zoneMap).map(z=>({Zone:z,Score:zoneMap[z]})).sort((a,b)=>b.Score-a.Score);
+  renderTable(zones,"zoneTable","Zone");
+}
+
+function renderTeam(sales){
+  const teamMap={};
+  sales.forEach(r=>teamMap[r.Team]=(teamMap[r.Team]||0)+r.Score);
+  const teams=Object.keys(teamMap).map(t=>({Team:t,Score:teamMap[t]})).sort((a,b)=>b.Score-a.Score);
+  renderTable(teams,"teamTable","Team");
+}
+
+function showTab(id,btn){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
 }
 
 fetchData();
-setInterval(fetchData,30000);
 
 </script>
 
