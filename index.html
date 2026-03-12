@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 
@@ -442,21 +441,6 @@ btn.classList.add("active");
 }
 
 fetchData();
-
-const tabs=["sales","trainers","team"];
-let currentTab=0;
-
-setInterval(()=>{
-
-currentTab=(currentTab+1)%tabs.length;
-
-document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-
-document.getElementById(tabs[currentTab]).classList.add("active");
-document.querySelectorAll(".tab-btn")[currentTab].classList.add("active");
-
-},10000);
 
 </script>
 
